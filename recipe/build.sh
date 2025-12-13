@@ -2,7 +2,7 @@ set -e
 
 cuda_major=$(echo $cuda_compiler_version | cut -d. -f1)
 
-$PYTHON -m pip install ./nvidia_nvcomp_cu$cuda_major-$PKG_VERSION-*.whl --no-deps
+$PYTHON -m pip install ./nvidia_nvcomp_cu$cuda_major-$PKG_VERSION-*.whl --no-deps --no-build-isolation -vv
 
 rm -rvf $SP_DIR/nvidia/nvcomp/include
 rm -rvf $SP_DIR/nvidia/nvcomp/libnvcomp.so.*

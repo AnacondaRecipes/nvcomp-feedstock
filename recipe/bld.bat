@@ -9,7 +9,7 @@ for /f "tokens=1 delims=." %%i in ("%cuda_compiler_version%") do (
 if errorlevel 1 exit /b 1
 
 :: Install the Python wheel
-%PYTHON% -m pip install .\nvidia_nvcomp_cu%major_version%-%PKG_VERSION%-py3-none-win_amd64.whl --no-deps
+%PYTHON% -m pip install .\nvidia_nvcomp_cu%major_version%-%PKG_VERSION%-py3-none-win_amd64.whl --no-deps --no-build-isolation -vv
 
 :: Exit on error
 if errorlevel 1 exit /b 1
