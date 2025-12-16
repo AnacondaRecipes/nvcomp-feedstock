@@ -1,0 +1,7 @@
+arm_variant_type:          # [aarch64]
+  - sbsa                   # [aarch64]
+
+# Use latest CUDA 12.x and 13.x
+cuda_compiler_version:
+  - 12.8
+  - 13.0
