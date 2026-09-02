@@ -2,7 +2,7 @@ set -e
 
 cuda_major=$(echo $cuda_compiler_version | cut -d. -f1)
 
-$PYTHON -m pip install ./nvidia_nvcomp_cu$cuda_major-$PKG_VERSION-*.whl --no-deps
+$PYTHON -m pip install ./nvidia_nvcomp_cu$cuda_major-$PKG_VERSION-*.whl --no-deps --no-build-isolation -vv
 
 # Query free-threadedness
 py_free_threaded=$($PYTHON -c "import sysconfig; print(int(bool(sysconfig.get_config_var('Py_GIL_DISABLED'))))")

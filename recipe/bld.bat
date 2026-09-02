@@ -9,7 +9,7 @@ for /f "tokens=1 delims=." %%i in ("%cuda_compiler_version%") do (
 if errorlevel 1 exit /b 1
 
 :: Install the Python wheel
-%PYTHON% -m pip install .\nvidia_nvcomp_cu%major_version%-%PKG_VERSION%-py3-none-win_amd64.whl --no-deps
+%PYTHON% -m pip install .\nvidia_nvcomp_cu%major_version%-%PKG_VERSION%-py3-none-win_amd64.whl --no-deps --no-build-isolation -vv
 
 :: Query whether the current Python was configured with GIL disabled
 for /f "delims=" %%i in ('%PYTHON% -c "import sysconfig; print(int(bool(sysconfig.get_config_var(\"Py_GIL_DISABLED\"))))"') do set "py_free_threaded=%%i"

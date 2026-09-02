@@ -27,8 +27,8 @@ source:
     sha256: e2c71babfd18a8e69542dd7e9ca018f9caa438094001a58e6bc4d8c999bf0d07
 
 build:
-  number: 2
-  skip: true  # [osx or ppc64le or not (cuda_compiler_version or "").startswith("1")]
+  number: 0
+  skip: true  # [osx]
   ignore_run_exports:
     - cuda-version
 
@@ -53,6 +53,12 @@ requirements:
 test:
   imports:
     - nvidia.nvcomp
+  commands:
+    # Cannot add 'pip check' due to the way we manage the dependencies:
+    #  * We don't have 'nvidia-libnvcomp-cu<CUDA_VERSION>' package from PyPI.org.
+    #  * Instead, we use 'libnvcomp-dev' package from 'libnvcomp' feedstock.
+    - python -c "from nvidia import nvcomp; print(\"nvcomp version:\", nvcomp.__version__)"
+    - python -c "from nvidia import nvcomp; print(\"nvcomp cuda version:\", nvcomp.__cuda_version__)"
 
 about:
   home: https://developer.nvidia.com/nvcomp
@@ -76,6 +82,8 @@ about:
   dev_url: https://developer.nvidia.com/nvcomp
 
 extra:
+  skip-lints:
+    - license_file_overspecified
   feedstock-name: nvcomp
   recipe-maintainers:
     - gmrrk
