@@ -28,7 +28,7 @@ source:
 
 build:
   number: 0
-  skip: true  # [osx or py>=314]
+  skip: true  # [osx]
   ignore_run_exports:
     - cuda-version
 
