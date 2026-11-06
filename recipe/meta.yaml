@@ -61,8 +61,11 @@ test:
     # Cannot add 'pip check' due to the way we manage the dependencies:
     #  * We don't have 'nvidia-libnvcomp-cu<CUDA_VERSION>' package from PyPI.org.
     #  * Instead, we use 'libnvcomp-dev' package from 'libnvcomp' feedstock.
-    - python -c "from nvidia import nvcomp; print(\"nvcomp version:\", nvcomp.__version__); assert nvcomp.__version__ == \"{{ version }}\""
-    - python -c "from nvidia import nvcomp; print(\"nvcomp cuda version:\", nvcomp.__cuda_version__); assert nvcomp.__cuda_version__.split(\".\")[0] == \"{{ cuda_compiler_version.split('.')[0] }}\""
+    # nvcomp.__version__ is the nvCOMP library version (major.minor.patch), not the
+    # four-component PyPI/conda package version (e.g. "5.3.0" vs "5.3.0.16").
+    - python -c "from nvidia import nvcomp; print(\"nvcomp version:\", nvcomp.__version__); assert nvcomp.__version__ == \"{{ version.split('.')[:3] | join('.') }}\""
+    # __cuda_version__ is CUDART_VERSION as an int (e.g. 13030 for CUDA 13.3).
+    - python -c "from nvidia import nvcomp; print(\"nvcomp cuda version:\", nvcomp.__cuda_version__); assert nvcomp.__cuda_version__ // 1000 == {{ cuda_compiler_version.split('.')[0] }}"
     # build.sh/bld.bat keep only the extension built for the running interpreter.
     - python -c "import glob, importlib.machinery, os; import nvidia.nvcomp as nvcomp; d = os.path.dirname(nvcomp.__file__); mods = glob.glob(os.path.join(d, \"nvcomp_impl*\")); assert len(mods) == 1, mods; assert any(mods[0].endswith(s) for s in importlib.machinery.EXTENSION_SUFFIXES), (mods, importlib.machinery.EXTENSION_SUFFIXES)"
     # The C library must come from the libnvcomp package, not be bundled in the wheel.
