@@ -1,2 +1,4 @@
-# build_env_vars:
-#   ANACONDA_ROCKET_ENABLE_PY314 : yes
+# TEMPORARY: add libnvcomp 5.3.0.16 staging channel
+# MUST REMOVE BEFORE MERGE
+channels:
+  - https://package-build.anaconda.com/pkg-orchestrator/v1/channels/graphs/8804b497-6ca2-48c2-a860-4c08b051a253
