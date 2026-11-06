@@ -1,4 +1,4 @@
-set -e
+set -euxo pipefail
 
 cuda_major=$(echo $cuda_compiler_version | cut -d. -f1)
 
@@ -25,3 +25,5 @@ done
 check-glibc $SP_DIR/nvidia/nvcomp/*.so
 
 cp $SP_DIR/nvidia_nvcomp*.dist-info/licenses/LICENSE $SRC_DIR
+# NOTICE carries the third-party licenses (zstd, Meta ANS, ...) bundled into libnvcomp.
+cp $SP_DIR/nvidia_nvcomp*.dist-info/licenses/NOTICE $SRC_DIR
