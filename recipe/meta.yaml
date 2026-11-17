@@ -27,11 +27,12 @@ source:
 
 build:
   number: 0
-  # The PyPI wheels declare "Requires-Python: >=3.9,<3.15", so skip Python 3.15.
+  # Anaconda: every wheel's METADATA declares "Requires-Python: >=3.9, <3.15" (also
+  # exposed as info.requires_python on PyPI), so skip both ends of that range.
   # Anaconda: NVIDIA publishes only a py3-none-win_amd64 wheel for Windows, so the
   # Python bindings cannot be built for win-arm64 (no win_arm64 wheel on PyPI as of
   # Nov 2026). PBP auto graph generation and submission fails otherwise.
-  skip: true  # [osx or (win and not x86_64) or py>=315]
+  skip: true  # [osx or (win and not x86_64) or py<39 or py>=315]
   ignore_run_exports:
     - cuda-version
 
