@@ -77,6 +77,7 @@ test:
 about:
   home: https://developer.nvidia.com/nvcomp
   license: LicenseRef-nvCOMP-Software-License-Agreement AND LicenseRef-NVIDIA-End-User-License-Agreement
+  license_family: Other
   license_file:
     - LICENSE
     # Third-party licenses (zstd, Meta ANS, ...) bundled into the nvcomp binaries.
@@ -99,7 +100,7 @@ about:
 
 extra:
   skip-lints:
-    - license_file_overspecified
+    - deprecate_license_url
   feedstock-name: nvcomp
   recipe-maintainers:
     - gmrrk
