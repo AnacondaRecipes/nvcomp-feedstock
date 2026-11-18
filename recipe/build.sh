@@ -2,7 +2,16 @@ set -euxo pipefail
 
 cuda_major=$(echo $cuda_compiler_version | cut -d. -f1)
 
+# Anaconda: upstream (conda-forge) cross-compile-only branch, disabled because
+# Anaconda builds every subdir natively.
+# if [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == "1" ]]; then
+#     # crossenv >= 1.6 replaces pip's wheel-tag list with just linux_<arch>, so pip rejects
+#     # manylinux wheels when cross-compiling. Name the target platform explicitly instead.
+#     $PYTHON -m pip install ./nvidia_nvcomp_cu$cuda_major-$PKG_VERSION-*.whl --no-deps --no-build-isolation \
+#         --platform manylinux_2_28_${target_platform#linux-} --only-binary=:all: --target $SP_DIR
+# else
 $PYTHON -m pip install ./nvidia_nvcomp_cu$cuda_major-$PKG_VERSION-*.whl --no-deps --no-build-isolation -vv
+# fi
 
 # Query free-threadedness
 py_free_threaded=$($PYTHON -c "import sysconfig; print(int(bool(sysconfig.get_config_var('Py_GIL_DISABLED'))))")
